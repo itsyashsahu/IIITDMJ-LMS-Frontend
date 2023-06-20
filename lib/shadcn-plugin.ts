@@ -1,12 +1,34 @@
 /* eslint-disable prettier/prettier */
 import plugin from "tailwindcss/plugin";
-// export const shadcnPlugin = plugin(function ({ addBase }) {
+import convert from "color-convert";
+
+function hexToHsl(hex:string) {
+  const [r, g, b] = convert.hex.hsl(hex);
+  return `${r} ${g}% ${b}%`;
+}
+
+type ColorFunction = {
+  (): string;
+  (opacityValue: string): string;
+};
+
+function withOpacity(variableName: string): ColorFunction {
+  const colorFn: ColorFunction = (opacityValue?: string) => {
+    if (opacityValue !== undefined) {
+      return `hsla(var(${variableName}) / ${opacityValue})`;
+    }
+    return `hsl(var(${variableName}))`;
+  };
+  return colorFn;
+}
+
+
 const shadcnPlugin = plugin(
   // Add CSS Variables Definition to the base layer
   function ({ addBase }) {
     addBase({
       ":root": {
-        "--background": "0 0% 100%",
+        "--background": hexToHsl("#ffffff"),
         "--foreground": "222.2 47.4% 11.2%",
         "--muted": "210 40% 96.1%",
         "--muted-foreground": "215.4 16.3% 46.9%",
@@ -72,38 +94,38 @@ const shadcnPlugin = plugin(
       },
       extend: {
         colors: {
-          border: "hsl(var(--border))",
-          input: "hsl(var(--input))",
-          ring: "hsl(var(--ring))",
-          background: "hsl(var(--background))",
-          foreground: "hsl(var(--foreground))",
+          border: withOpacity("--border")(),
+          input: withOpacity("--input")(),
+          ring: withOpacity("--ring")(),
+          background: withOpacity("--background")(),
+          foreground: withOpacity("--foreground")(),
           primary: {
-            DEFAULT: "hsl(var(--primary))",
-            foreground: "hsl(var(--primary-foreground))",
+            DEFAULT: withOpacity("--primary")(),
+            foreground: withOpacity("--primary-foreground")(),
           },
           secondary: {
-            DEFAULT: "hsl(var(--secondary))",
-            foreground: "hsl(var(--secondary-foreground))",
+            DEFAULT: withOpacity("--secondary")(),
+            foreground: withOpacity("--secondary-foreground")(),
           },
           destructive: {
-            DEFAULT: "hsl(var(--destructive))",
-            foreground: "hsl(var(--destructive-foreground))",
+            DEFAULT: withOpacity("--destructive")(),
+            foreground: withOpacity("--destructive-foreground")(),
           },
           muted: {
-            DEFAULT: "hsl(var(--muted))",
-            foreground: "hsl(var(--muted-foreground))",
+            DEFAULT: withOpacity("--muted")(),
+            foreground: withOpacity("--muted-foreground")(),
           },
           accent: {
-            DEFAULT: "hsl(var(--accent))",
-            foreground: "hsl(var(--accent-foreground))",
+            DEFAULT: withOpacity("--accent")(),
+            foreground: withOpacity("--accent-foreground")(),
           },
           popover: {
-            DEFAULT: "hsl(var(--popover))",
-            foreground: "hsl(var(--popover-foreground))",
+            DEFAULT: withOpacity("--popover")(),
+            foreground: withOpacity("--popover-foreground")(),
           },
           card: {
-            DEFAULT: "hsl(var(--card))",
-            foreground: "hsl(var(--card-foreground))",
+            DEFAULT: withOpacity("--card")(),
+            foreground: withOpacity("--card-foreground")(),
           },
         },
         borderRadius: {
