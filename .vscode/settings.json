@@ -9,5 +9,8 @@
   "eslint.format.enable": true, // set as "true" to run 'prettier' last not first,
   "editor.codeActionsOnSave": {
     "source.fixAll": true
-  }
+  },
+  "allowImportingTsExtension":true,
+  "allowImportingTsExtensions":true,
+  "files.eol": "\r\n",
 }

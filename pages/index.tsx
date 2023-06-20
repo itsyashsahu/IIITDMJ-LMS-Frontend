@@ -1,14 +1,11 @@
 // import Image from 'next/image'
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import { Button } from "@/components/ui/button.tsx";
 
 export default function Home() {
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      Updated the Commit Script
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <Button>Click Me</Button>
+      <p>Updated the Commit Script</p>
     </main>
   );
 }

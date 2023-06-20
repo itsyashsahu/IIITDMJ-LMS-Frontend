@@ -6,7 +6,7 @@ export default function Document() {
       <Head />
       <body>
         <Main />
-        asdfasdf
+        Hello Motorola
         <NextScript />
       </body>
     </Html>
