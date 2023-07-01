@@ -52,6 +52,9 @@
     "import/no-extraneous-dependencies": "off",
     "react/require-default-props": "off",
     "func-names": "off",
-    "prettier/prettier": ["error", { "endOfLine": "auto" }]
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "jsx-a11y/label-has-associated-control": "off",
+    "import/extensions": "off",
+    "react/function-component-definition":"off"
   }
 }
