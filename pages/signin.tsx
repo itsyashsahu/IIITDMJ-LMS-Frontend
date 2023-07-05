@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useContext } from "react";
 // Forms validation Imports
 import { z, ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,6 +10,11 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { Input } from "@/components/ui/input";
 import { setToken } from "@/lib/auth";
+import {
+  AuthContext,
+  AuthUpdateContext,
+} from "@/components/mantine/AuthProvider";
+import useAuthentication from "@/components/hooks/useAuthentication";
 
 type TSignFormData = {
   email: string;
@@ -18,6 +23,8 @@ type TSignFormData = {
 
 export default function SignIn() {
   const router = useRouter();
+  // useAuthentication();
+  // const setUser = useContext(AuthUpdateContext);
   const schema: ZodType<TSignFormData> = z.object({
     email: z.string().email(),
     password: z.string().min(6),
@@ -38,7 +45,9 @@ export default function SignIn() {
     },
     onSuccess: (data: any) => {
       setToken(data.data);
-      router.push("/");
+      // console.log("🚀 ~ SignIn ~ data.data:", data.data.user);
+      // console.log("🚀 ~ SignIn ~ setUser:", setUser);
+      // setUser(data.data.user);
     },
     onError: (error: any) => {
       console.log("🚀 ~ submitMutation ~ error", error);

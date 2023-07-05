@@ -1,6 +1,10 @@
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { queryClient } from "@/components/ReactQueryClientProvider";
+// import { BASE_URL } from "@/pages/_app";
+import { jwtVerify } from "jose";
 
 export const setToken = (data: any) => {
   if (typeof window === "undefined") {
@@ -24,15 +28,10 @@ export const unsetToken = () => {
   Cookies.remove("jwt");
   Cookies.remove("username");
   console.log("🚀 ~ UnsetToken ~ username:");
-  // Router.reload();
-  window.location.reload();
-  // window.rel
 };
 
 // eslint-disable-next-line consistent-return
 export function getUserFromLocalCookie() {
-  // console.log("asdfasdf---- ");
-
   // eslint-disable-next-line no-use-before-define
   const jwt = getTokenFromLocalCookie();
   if (jwt) {
@@ -98,4 +97,30 @@ export const getIdFromServerCookie = (req: any) => {
   }
   const id = idCookie.split("=")[1];
   return id;
+};
+
+// Cookies Logic for Middlewares
+
+interface UserJwtPayload {
+  jti: string;
+  iat: number;
+}
+export const getJwtSecretKey = () => {
+  const secret = process.env.JWT_SECRET_KEY;
+  if (!secret || secret.length === 0) {
+    throw new Error("The environment variable JWT SECRET KEY is not set.");
+  }
+  return secret;
+};
+
+export const verifyAuth = async (token: string) => {
+  try {
+    const verified = await jwtVerify(
+      token,
+      new TextEncoder().encode(getJwtSecretKey()),
+    );
+    return verified.payload as UserJwtPayload;
+  } catch (error) {
+    throw new Error("Your token has expired. ");
+  }
 };

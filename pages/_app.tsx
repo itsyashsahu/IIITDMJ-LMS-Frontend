@@ -4,6 +4,7 @@ import { MantineProvider } from "@mantine/core";
 import "@/styles/globals.css";
 import ReactQueyProvider from "@/components/ReactQueryClientProvider";
 import axios from "axios";
+import AuthContextProvider from "@/components/mantine/AuthProvider";
 import { UserProvider, useFetchUser } from "../lib/authContext";
 
 export const BASE_URL =
@@ -13,7 +14,6 @@ axios.defaults.baseURL = BASE_URL;
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
-  const { user, loading } = useFetchUser();
   return (
     <>
       <Head>
@@ -24,18 +24,20 @@ export default function App(props: AppProps) {
         />
       </Head>
 
+      {/* <UserProvider value={{ user, loading }}> */}
+      {/* </UserProvider> */}
       <ReactQueyProvider>
-        <UserProvider value={{ user, loading }}>
-          <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-            theme={{
-              colorScheme: "light",
-            }}
-          >
-            <Component {...pageProps} />
-          </MantineProvider>
-        </UserProvider>
+        {/* <AuthContextProvider> */}
+        <MantineProvider
+          withGlobalStyles
+          withNormalizeCSS
+          theme={{
+            colorScheme: "light",
+          }}
+        >
+          <Component {...pageProps} />
+        </MantineProvider>
+        {/* </AuthContextProvider> */}
       </ReactQueyProvider>
     </>
   );

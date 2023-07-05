@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getUserFromLocalCookie } from "./auth";
+import { getUserFromLocalCookie, useUserFromLocalCookie } from "./auth";
 
 let userState: any;
 interface UserContextProps {
@@ -37,27 +37,30 @@ export const UserProvider: React.FC<UserProviderProps> = ({
 
 export const useUser = () => useContext(User);
 
+// const { user } = useUserFromLocalCookie();
 export const useFetchUser = () => {
   const [data, setUser] = useState({
     user: userState || null,
     loading: userState === undefined,
   });
 
+  // const { user } = useUserFromLocalCookie();
+  // useEffect(() => {
+  //   setUser({ user, loading: false });
+  // }, [user]);
+
   useEffect(() => {
     if (userState !== undefined) {
       return;
     }
-
     let isMounted = true;
-    const resolveUser = async () => {
+    const ResolveUser = async () => {
       const user = await getUserFromLocalCookie();
-      console.log("🚀 ~ resolveUser ~ user:", user);
       if (isMounted) {
         setUser({ user, loading: false });
       }
     };
-    resolveUser();
-
+    ResolveUser();
     // eslint-disable-next-line consistent-return
     return () => {
       isMounted = false;
