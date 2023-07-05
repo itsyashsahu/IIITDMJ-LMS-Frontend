@@ -7,7 +7,6 @@ import React from "react";
 // type Props = {};
 
 const Callback = () => {
-  console.log("user");
   const router = useRouter();
   const currentUrl = router.asPath;
   // console.log("🚀 ~ Callback ~ token:", token)
