@@ -24,7 +24,6 @@ type TResetFormData = {
 export default function ResetPassword() {
   const router = useRouter();
   const { code } = router.query;
-  console.log("🚀 ~ ResetPassword ~ code:", code)
   const schema: ZodType<TResetFormData> = z.object({
     password: z.string().min(6),
     passwordConfirmation: z.string().min(6),

@@ -2,9 +2,9 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-type Props = {};
+// type Props = {};
 
-const PasswordResetLinkSent = (props: Props) => {
+const PasswordResetLinkSent = () => {
   const [userEmail, setUserEmail] = useState("");
   useEffect(() => {
     let isMounted = true;

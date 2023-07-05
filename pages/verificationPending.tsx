@@ -2,9 +2,9 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import React, { useEffect } from "react";
 
-type Props = {};
+// type Props = {};
 
-const VerficationPending = (props: Props) => {
+const VerificationPending = () => {
   // const userEmail = Cookies.get("userEmail");
   const [userEmail, setUserEmail] = React.useState("");
   useEffect(() => {
@@ -38,4 +38,4 @@ const VerficationPending = (props: Props) => {
   );
 };
 
-export default VerficationPending;
+export default VerificationPending;

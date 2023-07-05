@@ -22,7 +22,8 @@ export async function middleware(req: NextRequest) {
     pathname === "/signin" ||
     pathname === "/signup" ||
     pathname === "/forgot-password" ||
-    pathname.startsWith("/reset-password");
+    pathname.startsWith("/reset-password") ||
+    pathname.startsWith("/auth/google/callback");
 
   // Visible only if the user is logged in
   const isAuthenticatedUrl =
@@ -60,5 +61,6 @@ export const config = {
     "/dashboard",
     "/reset-password",
     "/forgot-password",
+    "/auth/google/callback",
   ],
 };

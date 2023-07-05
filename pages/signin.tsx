@@ -15,6 +15,7 @@ import {
   AuthUpdateContext,
 } from "@/components/mantine/AuthProvider";
 import useAuthentication from "@/components/hooks/useAuthentication";
+import { BASE_URL } from "./_app";
 
 type TSignFormData = {
   email: string;
@@ -89,7 +90,8 @@ export default function SignIn() {
               >
                 <path d="M896 786h725q12 67 12 128 0 217-91 387.5t-259.5 266.5-386.5 96q-157 0-299-60.5t-245-163.5-163.5-245-60.5-299 60.5-299 163.5-245 245-163.5 299-60.5q300 0 515 201l-209 201q-123-119-306-119-129 0-238.5 65t-173.5 176.5-64 243.5 64 243.5 173.5 176.5 238.5 65q87 0 160-24t120-60 82-82 51.5-87 22.5-78h-436v-264z" />
               </svg>
-              Sign in with Google
+              {/* // eslint-disable-next-line @next/next/no-html-link-for-pages */}
+              <a href={`${BASE_URL}api/connect/google`}>Sign in with Google</a>
             </Button>
 
             <form className="space-y-4 md:space-y-6" action="#">
