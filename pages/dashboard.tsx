@@ -1,10 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { unsetToken } from "@/lib/auth";
+import { useRouter } from "next/router";
 import React from "react";
 
 // type Props = {};
 
-const dashboard = () => {
+const Dashboard = () => {
+  const router = useRouter();
+  const handleLogout = () => {
+    unsetToken();
+    router.reload();
+  };
   return (
     <section className="text-gray-600 body-font h-[calc(92vh-2rem)] grid place-items-center">
       <div className="container px-5 py-20 mx-auto">
@@ -134,9 +140,7 @@ const dashboard = () => {
         </div>
         <Button
           type="button"
-          onClick={() => {
-            unsetToken();
-          }}
+          onClick={handleLogout}
           className="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
         >
           Logout
@@ -146,4 +150,4 @@ const dashboard = () => {
   );
 };
 
-export default dashboard;
+export default Dashboard;

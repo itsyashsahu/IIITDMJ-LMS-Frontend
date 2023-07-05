@@ -18,6 +18,15 @@ export const setToken = (data: any) => {
     // window.location.pathname("/");
   }
 };
+export const setUserVerificationPending = (data: any) => {
+  if (typeof window === "undefined") {
+    return;
+  }
+  Cookies.set("id", data.user.id);
+  Cookies.set("username", data.user.username);
+  Cookies.set("userStatus", data.user.confirmed);
+  Cookies.set("userEmail", data.user.email);
+};
 
 export const unsetToken = () => {
   // const Router = useRouter();

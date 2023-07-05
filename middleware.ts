@@ -18,7 +18,11 @@ export async function middleware(req: NextRequest) {
     pathname === "/" || pathname === "/about" || pathname === "/contact-us";
 
   // Visible only if the user is not logged in
-  const isUnauthenticatedUrl = pathname === "/signin" || pathname === "/signup";
+  const isUnauthenticatedUrl =
+    pathname === "/signin" ||
+    pathname === "/signup" ||
+    pathname === "/forgot-password" ||
+    pathname.startsWith("/reset-password");
 
   // Visible only if the user is logged in
   const isAuthenticatedUrl =
@@ -48,5 +52,13 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/signin", "/signup", "/profile", "/dashboard"],
+  matcher: [
+    "/",
+    "/signin",
+    "/signup",
+    "/profile",
+    "/dashboard",
+    "/reset-password",
+    "/forgot-password",
+  ],
 };
