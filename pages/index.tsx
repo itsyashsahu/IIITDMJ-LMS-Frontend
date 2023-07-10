@@ -5,6 +5,7 @@ import graphqlRequestClient from "@/lib/graphqlRequestClient";
 import { useGetAllProductsQuery } from "@/src/__generated__/graphql";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const LandingPageContent = () => {
   return (
@@ -54,13 +55,16 @@ export default function Home() {
   console.log("🚀 ~ Home ~ session:", session);
   // GetAllProductsDocument
 
-  // const { data, error, isLoading } =
-  //   useGetAllProductsQuery(graphqlRequestClient);
+  const { data, error, isLoading } =
+    useGetAllProductsQuery(graphqlRequestClient);
 
-  // useEffect(() => {
-  //   console.log("🚀 ~ Home ~ loading:", isLoading);
-  //   console.log("🚀 ~ Home ~ loading:", data);
-  // }, [data, isLoading]);
+  useEffect(() => {
+    console.log("🚀 ~ Home ~ loading:", isLoading);
+    console.log("🚀 ~ Home ~ loading:", data);
+    if (error) {
+      console.log("🚀 ~ useEffect ~ error:", error);
+    }
+  }, [data, isLoading, error]);
 
   return <LandingPageContent />;
 }

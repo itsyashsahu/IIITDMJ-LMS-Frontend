@@ -17,11 +17,11 @@ export default function App({
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <Providers>
-        <SessionProvider session={session}>
+      <SessionProvider session={session}>
+        <Providers>
           <Component {...pageProps} />
-        </SessionProvider>
-      </Providers>
+        </Providers>
+      </SessionProvider>
     </>
   );
 }

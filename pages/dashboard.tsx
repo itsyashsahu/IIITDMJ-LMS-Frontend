@@ -1,12 +1,23 @@
 import { Button } from "@/components/ui/button";
+import graphqlRequestClient from "@/lib/graphqlRequestClient";
+import { useGetAllProductsQuery } from "@/src/__generated__/graphql";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 
 // type Props = {};
 
 const Dashboard = () => {
   const router = useRouter();
+
+  const { data, error, isLoading } =
+    useGetAllProductsQuery(graphqlRequestClient);
+
+  useEffect(() => {
+    console.log("🚀 ~ Home ~ loading:", isLoading);
+    console.log("🚀 ~ Home ~ loading:", data);
+  }, [data, isLoading, error]);
+
   const handleLogout = () => {
     signOut();
     router.reload();
