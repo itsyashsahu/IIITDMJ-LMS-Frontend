@@ -24,20 +24,16 @@ export default function App(props: AppProps) {
         />
       </Head>
 
-      {/* <UserProvider value={{ user, loading }}> */}
-      {/* </UserProvider> */}
       <ReactQueyProvider>
-        {/* <AuthContextProvider> */}
-        <MantineProvider
-          withGlobalStyles
-          withNormalizeCSS
-          theme={{
-            colorScheme: "light",
-          }}
-        >
-          <Component {...pageProps} />
-        </MantineProvider>
-        {/* </AuthContextProvider> */}
+        {/* <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{
+          colorScheme: "light",
+        }}
+      > */}
+        <Component {...pageProps} />
+        {/* </MantineProvider> */}
       </ReactQueyProvider>
     </>
   );

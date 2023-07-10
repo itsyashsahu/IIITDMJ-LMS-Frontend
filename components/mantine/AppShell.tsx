@@ -9,7 +9,8 @@ export default function MantineAppShell({
 }: {
   children: React.ReactNode;
 }) {
-  const sidebarState = useSidebarStore((state) => state.state);
+  // const sidebarState = useSidebarStore((state) => state.state);
+  const sidebarState = true;
   return (
     <AppShell
       // hidden

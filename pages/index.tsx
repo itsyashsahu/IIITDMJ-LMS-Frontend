@@ -4,8 +4,10 @@ import { AuthContext } from "@/components/mantine/AuthProvider";
 import { Button } from "@/components/ui/button.tsx";
 import { unsetToken } from "@/lib/auth";
 import { useUser } from "@/lib/authContext";
+import graphqlRequestClient from "@/lib/graphqlRequestClient";
+import { useGetAllProductsQuery } from "@/src/__generated__/graphql";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 const LandingPageContent = () => {
   return (
@@ -51,6 +53,14 @@ const LandingPageContent = () => {
 };
 
 export default function Home() {
+  // GetAllProductsDocument
+
+  const { loading, data, error } = useGetAllProductsQuery(graphqlRequestClient);
+
+  useEffect(() => {
+    console.log("🚀 ~ Home ~ loading:", data);
+  }, [data]);
+
   return (
     <MantineAppShell>
       <LandingPageContent />

@@ -29,49 +29,49 @@ export const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 export const AuthUpdateContext = createContext({} as any);
 
 const AuthContextProvider = ({ children }: Props) => {
-  const [data, setUser] = useState<AuthContextType>(defaultAuthContext);
+  // const [data, setUser] = useState<AuthContextType>(defaultAuthContext);
   // eslint-disable-next-line no-use-before-define
-  const jwt = getTokenFromLocalCookie();
+  // const jwt = getTokenFromLocalCookie();
 
-  const fetchUser = async () => {
-    const response = await axios.get(`/api/users/me`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwt}`,
-      },
-    });
-    return response.data.username;
-  };
+  // const fetchUser = async () => {
+  //   const response = await axios.get(`/api/users/me`, {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${jwt}`,
+  //     },
+  //   });
+  //   return response.data.username;
+  // };
 
-  console.log("Request Started");
-  const user = useQuery({
-    queryKey: ["user"],
-    queryFn: fetchUser,
-    enabled: !!jwt, // Only fetch when jwt is present
-    cacheTime: 600000, // Cache for 10 minutes
-  });
-  console.log("🚀 ~ AuthContextProvider ~ user:", user);
-  console.log("Request Completed");
+  // console.log("Request Started");
+  // const user = useQuery({
+  //   queryKey: ["user"],
+  //   queryFn: fetchUser,
+  //   enabled: !!jwt, // Only fetch when jwt is present
+  //   cacheTime: 600000, // Cache for 10 minutes
+  // });
+  // console.log("🚀 ~ AuthContextProvider ~ user:", user);
+  // console.log("Request Completed");
 
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      if (!jwt) {
-        setUser({
-          user: null,
-          loading: false,
-        });
-      } else {
-        setUser({
-          user: user.data || null,
-          loading: user.isLoading || user.isFetching,
-        });
-      }
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  // useEffect(() => {
+  //   let isMounted = true;
+  //   if (isMounted) {
+  //     if (!jwt) {
+  //       setUser({
+  //         user: null,
+  //         loading: false,
+  //       });
+  //     } else {
+  //       // setUser({
+  //       //   user: user.data || null,
+  //       //   loading: user.isLoading || user.isFetching,
+  //       // });
+  //     }
+  //   }
+  //   return () => {
+  //     isMounted = false;
+  //   };
+  // }, []);
 
   // const { user } = useUserFromLocalCookie();
   // useEffect(() => {

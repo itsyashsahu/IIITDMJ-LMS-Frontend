@@ -1,0 +1,10 @@
+query GetAllProducts{
+  products{
+    data{
+      id
+      attributes{
+        title
+      }
+    }
+  }
+}
