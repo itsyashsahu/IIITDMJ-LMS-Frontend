@@ -1,21 +1,15 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useContext } from "react";
+import React from "react";
 // Forms validation Imports
 import { z, ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { Input } from "@/components/ui/input";
-import { setToken } from "@/lib/auth";
-import {
-  AuthContext,
-  AuthUpdateContext,
-} from "@/components/mantine/AuthProvider";
 import { signIn } from "next-auth/react";
-import { BASE_URL } from "../_app";
+import { mainSectionHeight } from "@/components/blocks/AppShell";
 
 type TSignFormData = {
   email: string;
@@ -40,13 +34,13 @@ export default function SignIn() {
       return signIn("credentials", {
         identifier: data.email,
         password: data.password,
+        byPass: "",
+        jwt: "",
         redirect: true,
         callbackUrl: "/",
       });
     },
     onSuccess: (data: any) => {
-      console.log("🚀 ~ SignIn ~ data:", data);
-      // setToken(data.data);
       router.reload();
     },
     onError: (error: any) => {
@@ -60,8 +54,11 @@ export default function SignIn() {
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <section
+      style={{ height: mainSectionHeight }}
+      className="bg-gray-50 dark:bg-gray-900 grid place-items-center"
+    >
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
         <Link
           href="/"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
@@ -94,7 +91,11 @@ export default function SignIn() {
                 <path d="M896 786h725q12 67 12 128 0 217-91 387.5t-259.5 266.5-386.5 96q-157 0-299-60.5t-245-163.5-163.5-245-60.5-299 60.5-299 163.5-245 245-163.5 299-60.5q300 0 515 201l-209 201q-123-119-306-119-129 0-238.5 65t-173.5 176.5-64 243.5 64 243.5 173.5 176.5 238.5 65q87 0 160-24t120-60 82-82 51.5-87 22.5-78h-436v-264z" />
               </svg>
               {/* // eslint-disable-next-line @next/next/no-html-link-for-pages */}
-              <a href={`${BASE_URL}api/connect/google`}>Sign in with Google</a>
+              <a
+                href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/connect/google`}
+              >
+                Sign in with Google
+              </a>
             </Button>
 
             <form className="space-y-4 md:space-y-6" action="#">
@@ -162,7 +163,7 @@ export default function SignIn() {
                 <div className="flex items-center h-5">
                   <Link
                     className="text-gray-500 dark:text-gray-300 text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-                    href="/forget-password"
+                    href="/auth/forget-password"
                   >
                     {/* Terms and Conditions */}
                     Forget Password ?
@@ -178,7 +179,7 @@ export default function SignIn() {
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don&apos;t have an account?{" "}
                 <Link
-                  href="/signup"
+                  href="/auth/signup"
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Register here

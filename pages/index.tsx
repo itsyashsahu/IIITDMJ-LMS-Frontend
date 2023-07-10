@@ -1,14 +1,10 @@
 // import Image from 'next/image'
-import MantineAppShell from "@/components/mantine/AppShell.tsx";
-import { AuthContext } from "@/components/mantine/AuthProvider";
 import { Button } from "@/components/ui/button.tsx";
-import { unsetToken } from "@/lib/auth";
-import { useUser } from "@/lib/authContext";
+
 import graphqlRequestClient from "@/lib/graphqlRequestClient";
 import { useGetAllProductsQuery } from "@/src/__generated__/graphql";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useContext, useEffect } from "react";
 
 const LandingPageContent = () => {
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactQueyProvider from "@/lib/ReactQueryClientProvider";
 import { MantineProvider } from "@mantine/core";
-import MantineAppShell from "../mantine/AppShell";
+import MantineAppShell from "../blocks/AppShell";
 
 type Props = {
   children: React.ReactNode;

@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { setToken, setUserVerificationPending } from "@/lib/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -8,6 +7,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { ZodType, z } from "zod";
+import Cookies from "js-cookie";
+import { mainSectionHeight } from "@/components/blocks/AppShell";
 
 type TSignUpFormData = {
   email: string;
@@ -31,17 +32,19 @@ export default function SignUp() {
   });
   const submitMutation = useMutation({
     mutationFn: async (data: TSignUpFormData) => {
-      return axios.post("/api/auth/local/register", {
-        email: data.email,
-        password: data.password,
-        username: data.username,
-      });
+      return axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/local/register`,
+        {
+          email: data.email,
+          password: data.password,
+          username: data.username,
+        },
+      );
     },
     onSuccess: (data: any) => {
-      setUserVerificationPending(data.data);
-      router.push("/verificationPending");
-      // setToken(data.data);
-      // router.reload();
+      // Currently the data to the verification page is being passed using the cookies
+      Cookies.set("userEmail", data.data.user.email);
+      router.push("/auth/verificationPending");
     },
     onError: (error: any) => {
       console.log("🚀 ~ submitMutation ~ error", error);
@@ -54,8 +57,11 @@ export default function SignUp() {
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <section
+      style={{ height: mainSectionHeight }}
+      className="bg-gray-50 dark:bg-gray-900 grid place-items-center"
+    >
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto  lg:py-0">
         <Link
           href="/"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
@@ -153,7 +159,7 @@ export default function SignUp() {
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
                 <Link
-                  href="/signin"
+                  href="/auth/signin"
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Login here

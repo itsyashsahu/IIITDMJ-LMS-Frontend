@@ -14,6 +14,8 @@ const authOptions: AuthOptions = {
           placeholder: "jsmith@email.com",
         },
         password: { label: "Password", type: "password" },
+        jwt: { label: "JWT", type: "password" },
+        byPass: { label: "byPass", type: "checkbox" },
       },
 
       async authorize(credentials, req) {
@@ -23,10 +25,34 @@ const authOptions: AuthOptions = {
         const {
           identifier,
           password,
-        }: { identifier: string; password: string } | undefined = credentials;
+          byPass,
+          jwt,
+        }:
+          | {
+              identifier: string;
+              password: string;
+              byPass: string;
+              jwt: string;
+            }
+          | undefined = credentials;
 
+        if (byPass) {
+          const url = `${process.env.BACKEND_URL}/api/users/me`;
+          const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`,
+          };
+          const res = await axios.get(url, { headers });
+          if (res.data) {
+            const user = {
+              jwt,
+              user: res.data,
+            };
+            return user;
+          }
+          return null;
+        }
         const url = `${process.env.BACKEND_URL}/api/auth/local`;
-
         const res = await axios.post(url, {
           identifier,
           password,
@@ -36,6 +62,7 @@ const authOptions: AuthOptions = {
         if (user) {
           return user;
         }
+
         return null;
       },
     }),

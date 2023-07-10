@@ -5,6 +5,10 @@ import useOnClientStore from "@/store/useOnClientStore.ts";
 import CustomHeader from "./CustomHeader.tsx";
 import CustomNavbar from "./CustomNavbar.tsx";
 
+export const headerHeight = "8vh";
+export const navbarHeight = "92vh";
+export const mainSectionHeight = `calc(92vh - 2rem)`;
+
 export default function MantineAppShell({
   children,
 }: {

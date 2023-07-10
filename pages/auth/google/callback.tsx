@@ -1,6 +1,6 @@
-import { setToken } from "@/lib/auth";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -9,22 +9,26 @@ import React from "react";
 const Callback = () => {
   const router = useRouter();
   const currentUrl = router.asPath;
-  // console.log("🚀 ~ Callback ~ token:", token)
   const cleanedUrl = currentUrl.replace("/auth/google/callback?", "");
-  // const token = "asdf";
-
-  const authQuery = useQuery({
+  useQuery({
     queryKey: ["auth", "google"],
     queryFn: async () => {
       const response = await axios.get(
-        `/api/auth/google/callback?${cleanedUrl}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/google/callback?${cleanedUrl}`,
       );
       return response;
     },
     enabled: !!cleanedUrl,
-    onSuccess: (data: any) => {
-      setToken(data.data);
-      router.reload();
+    onSuccess: async (data: any) => {
+      const { jwt } = data.data;
+      await signIn("credentials", {
+        identifier: "",
+        password: "",
+        byPass: "true",
+        jwt,
+        redirect: true,
+        callbackUrl: "/",
+      });
     },
     onError: (error: any) => {
       console.log("🚀 ~ submitMutation ~ error", error);
@@ -33,7 +37,7 @@ const Callback = () => {
 
   return (
     <div>
-      <p>a;lskdjfas;ldkfj</p>
+      <p>Loading</p>
     </div>
   );
 };

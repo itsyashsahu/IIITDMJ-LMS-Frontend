@@ -1,21 +1,16 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useContext } from "react";
+import React from "react";
 // Forms validation Imports
 import { z, ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { Input } from "@/components/ui/input";
-import { setToken } from "@/lib/auth";
-import {
-  AuthContext,
-  AuthUpdateContext,
-} from "@/components/mantine/AuthProvider";
-import useAuthentication from "@/components/hooks/useAuthentication";
 import Cookies from "js-cookie";
+import { mainSectionHeight } from "@/components/blocks/AppShell";
 
 type TForgetPasswordFormData = {
   email: string;
@@ -37,13 +32,16 @@ export default function ForgetPassword() {
   const email = watch("email");
   const submitMutation = useMutation({
     mutationFn: async (data: TForgetPasswordFormData) => {
-      return axios.post("/api/auth/forgot-password", {
-        email: data.email,
-      });
+      return axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/forgot-password`,
+        {
+          email: data.email,
+        },
+      );
     },
     onSuccess: (data: any) => {
       Cookies.set("userEmail", email);
-      router.push("/password-reset-link-sent");
+      router.push("/auth/password-reset-link-sent");
     },
     onError: (error: any) => {
       console.log("🚀 ~ submitMutation ~ error", error);
@@ -51,13 +49,16 @@ export default function ForgetPassword() {
   });
 
   const submitData = (data: TForgetPasswordFormData) => {
-    console.log("IT WORKED --", data);
+    // console.log("IT WORKED --", data);
     submitMutation.mutate(data);
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <section
+      style={{ height: mainSectionHeight }}
+      className="bg-gray-50 dark:bg-gray-900 grid place-items-center"
+    >
+      <div className="flex flex-col items-center justify-center px-6 py-5 mx-auto lg:py-0">
         <Link
           href="/"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
@@ -105,7 +106,7 @@ export default function ForgetPassword() {
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don&apos;t have an account?{" "}
                 <Link
-                  href="/signup"
+                  href="/auth/signup"
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Register here

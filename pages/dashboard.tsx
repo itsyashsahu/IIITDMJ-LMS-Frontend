@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { unsetToken } from "@/lib/auth";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import React from "react";

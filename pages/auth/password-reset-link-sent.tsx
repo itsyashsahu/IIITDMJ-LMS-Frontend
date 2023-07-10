@@ -1,7 +1,8 @@
 import Cookies from "js-cookie";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-
+import { mainSectionHeight } from "@/components/blocks/AppShell";
+import { cn } from "@/lib/utils";
 // type Props = {};
 
 const PasswordResetLinkSent = () => {
@@ -16,7 +17,12 @@ const PasswordResetLinkSent = () => {
     };
   }, []);
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden py-6 sm:py-12 bg-white">
+    <div
+      style={{ minHeight: mainSectionHeight }}
+      className={cn(
+        `relative flex flex-col items-center justify-center overflow-hidden py-6 sm:py-12 bg-white`,
+      )}
+    >
       <div className="max-w-xl px-5 text-center">
         <h2 className="mb-2 text-[42px] font-bold text-zinc-800">
           Check your inbox

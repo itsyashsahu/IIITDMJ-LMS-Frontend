@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useContext } from "react";
+import React from "react";
 // Forms validation Imports
 import { z, ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,12 +9,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { Input } from "@/components/ui/input";
-import { setToken } from "@/lib/auth";
-import {
-  AuthContext,
-  AuthUpdateContext,
-} from "@/components/mantine/AuthProvider";
-import useAuthentication from "@/components/hooks/useAuthentication";
+import { mainSectionHeight } from "@/components/blocks/AppShell";
 
 type TResetFormData = {
   password: string;
@@ -37,14 +32,16 @@ export default function ResetPassword() {
   });
   const submitMutation = useMutation({
     mutationFn: async (data: TResetFormData) => {
-      return axios.post("/api/auth/reset-password", {
-        code,
-        password: data.password,
-        passwordConfirmation: data.passwordConfirmation,
-      });
+      return axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/reset-password`,
+        {
+          code,
+          password: data.password,
+          passwordConfirmation: data.passwordConfirmation,
+        },
+      );
     },
     onSuccess: (data: any) => {
-      setToken(data.data);
       router.reload();
     },
     onError: (error: any) => {
@@ -58,7 +55,10 @@ export default function ResetPassword() {
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
+    <section
+      style={{ height: mainSectionHeight }}
+      className="bg-gray-50 dark:bg-gray-900 grid place-items-center"
+    >
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <Link
           href="/"
