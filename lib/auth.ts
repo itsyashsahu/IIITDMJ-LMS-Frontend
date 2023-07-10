@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { queryClient } from "@/components/ReactQueryClientProvider";
+import { queryClient } from "@/lib/ReactQueryClientProvider";
 // import { BASE_URL } from "@/pages/_app";
 import { jwtVerify } from "jose";
 

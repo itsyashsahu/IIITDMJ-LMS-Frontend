@@ -6,6 +6,7 @@ import { unsetToken } from "@/lib/auth";
 import { useUser } from "@/lib/authContext";
 import graphqlRequestClient from "@/lib/graphqlRequestClient";
 import { useGetAllProductsQuery } from "@/src/__generated__/graphql";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useContext, useEffect } from "react";
 
@@ -37,13 +38,13 @@ const LandingPageContent = () => {
               type="button"
               className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
             >
-              <Link href="/signin">Sign In</Link>
+              <Link href="/auth/signin">Sign In</Link>
             </Button>
             <Button
               type="button"
               className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg"
             >
-              <Link href="/signup">Sign Up</Link>
+              <Link href="/auth/signup">Sign Up</Link>
             </Button>
           </div>
         </div>
@@ -53,17 +54,17 @@ const LandingPageContent = () => {
 };
 
 export default function Home() {
+  const { data: session } = useSession();
+  console.log("🚀 ~ Home ~ session:", session);
   // GetAllProductsDocument
 
-  const { loading, data, error } = useGetAllProductsQuery(graphqlRequestClient);
+  // const { data, error, isLoading } =
+  //   useGetAllProductsQuery(graphqlRequestClient);
 
-  useEffect(() => {
-    console.log("🚀 ~ Home ~ loading:", data);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log("🚀 ~ Home ~ loading:", isLoading);
+  //   console.log("🚀 ~ Home ~ loading:", data);
+  // }, [data, isLoading]);
 
-  return (
-    <MantineAppShell>
-      <LandingPageContent />
-    </MantineAppShell>
-  );
+  return <LandingPageContent />;
 }

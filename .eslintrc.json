@@ -35,6 +35,7 @@
     "@typescript-eslint",
     "prettier"
   ],
+  "ignorePatterns": ["/src/__generated__/graphql.ts", "/your_dir/*.js"],
   "rules": {
     "react/jsx-filename-extension": [
       1,

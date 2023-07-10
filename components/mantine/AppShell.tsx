@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import { AppShell, Navbar, Header, ScrollArea } from "@mantine/core";
 import useSidebarStore from "@/store/sidebarStore.ts";
+import useOnClientStore from "@/store/useOnClientStore.ts";
 import CustomHeader from "./CustomHeader.tsx";
 import CustomNavbar from "./CustomNavbar.tsx";
 
@@ -10,7 +11,11 @@ export default function MantineAppShell({
   children: React.ReactNode;
 }) {
   // const sidebarState = useSidebarStore((state) => state.state);
-  const sidebarState = true;
+  const sidebarState = useOnClientStore(
+    useSidebarStore,
+    (state) => state.state,
+  );
+  // const sidebarState = true;
   return (
     <AppShell
       // hidden

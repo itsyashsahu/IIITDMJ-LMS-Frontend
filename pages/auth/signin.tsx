@@ -14,8 +14,8 @@ import {
   AuthContext,
   AuthUpdateContext,
 } from "@/components/mantine/AuthProvider";
-import useAuthentication from "@/components/hooks/useAuthentication";
-import { BASE_URL } from "./_app";
+import { signIn } from "next-auth/react";
+import { BASE_URL } from "../_app";
 
 type TSignFormData = {
   email: string;
@@ -37,13 +37,16 @@ export default function SignIn() {
   });
   const submitMutation = useMutation({
     mutationFn: async (data: TSignFormData) => {
-      return axios.post("/api/auth/local", {
+      return signIn("credentials", {
         identifier: data.email,
         password: data.password,
+        redirect: true,
+        callbackUrl: "/",
       });
     },
     onSuccess: (data: any) => {
-      setToken(data.data);
+      console.log("🚀 ~ SignIn ~ data:", data);
+      // setToken(data.data);
       router.reload();
     },
     onError: (error: any) => {
@@ -52,7 +55,7 @@ export default function SignIn() {
   });
 
   const submitData = (data: TSignFormData) => {
-    console.log("IT WORKED --", data);
+    // console.log("IT WORKED --", data);
     submitMutation.mutate(data);
   };
 
